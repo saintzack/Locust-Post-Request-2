@@ -1,0 +1,69 @@
+from locust import HttpUser, task, constant
+import json
+
+
+class WebsiteTestUser(HttpUser):
+
+    wait_time=constant(1)
+    def on_start(self):
+        """ on_start is called when a Locust start before any task is scheduled """
+        pass
+
+    @task(2)
+    def test_api3(self):
+        urll = "http://msmandiri.garudafood.co.id:3030/authentication"
+        payloadd = {"phone": "+6287889863031", "password": "Mitra01a", "strategy": "local-phone",
+                    "imei": "02:00:00:00:00:00"}
+        headerz = {"content-type": "application/json", "accept": "application/json"}
+        post_response= self.client.post(urll, data=json.dumps(payloadd), headers=headerz)
+        if post_response.status_code != 200:
+            assert True, "mantappp"
+        elif post_response.status_code != 201:
+            assert False, "hadeuhhh"
+        else:
+            assert False, "kacauuu"
+
+    def on_stop(self):
+        """ on_stop is called when the TaskSet is stopping """
+        pass
+
+
+'''
+    @task(1)
+    def test_api2(self):
+        self.client.get("http://snsapi-bosnet.garudafood.co.id/api.php")
+        headers = {'content-type': 'application/json', 'Accept-Encoding': 'gzip'}
+        self.client.post("/post", data=json.dumps({
+            "action": "CustomerDetail",
+            "token": "cdedeb040edfc764fd8c2b36dc7e21e4",
+            "id": "0007-17-000018413"
+        }),
+        headers=headers,
+        name="Create a new post") 
+        '''
+
+
+
+
+
+
+'''
+    @task(3)
+    def test_api(self):
+        self.client.get("http://10.50.1.87:3030/customer-details?id=0008-20-000020323")
+
+    @task(4)
+    def task_api3(self):
+
+        self.client.get("http://10.50.1.87:3030/customer-details?mobile=087889863031")
+
+
+
+    def on_stop(self):
+        """ on_stop is called when the TaskSet is stopping """
+        pass
+
+    wait_time = between(5000, 10000)
+
+
+'''
